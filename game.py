@@ -47,8 +47,8 @@ class Game:
         numberOfPlayers = self.numberOfPlayers
 
         for i in range(numberOfPlayers):
-            print('player{}: {} {}'.format(i,
-            self.playersCards[i][0].showCard(), self.playersCards[i][1].showCard()))
+            print('player{}: {} {} {}, {}'.format(i,
+            self.playersCards[i][0].showCard(), self.playersCards[i][1].showCard(), self.players[i].hand.category, self.players[i].hand.bestCards))
 
     # def openCards(self):
     #     for i in [1,2,3,5,7]:
@@ -67,6 +67,7 @@ class Game:
             playerHand = self.flop.copy()
             playerHand.extend(player.playerCards)
             hand = Hand(playerHand)
+            player.hand = hand
             hand.pickCategory()
 
             player.category = hand.category
@@ -84,26 +85,28 @@ class Game:
         for player in self.bestPlayers:
             player.showPlayer()
 
-        ranks = {}
-        for player in self.players:
-            playerHand = self.flop.copy()
-            playerHand.extend(player.playerCards)
-            hand = Hand(playerHand)
-            hand.pickCategory()
+        # danger code starts, don't uncomment it
+        # ranks = {}
+        # for player in self.players:
+        #     playerHand = self.flop.copy()
+        #     playerHand.extend(player.playerCards)
+        #     player.hand = Hand(playerHand)
+        #     hand.pickCategory()
+        #
+        #     player.category = hand.category
+        #     player.categoryRank = hand.rank
+        #
+        #     if player.categoryRank in ranks:
+        #         ranks[player.categoryRank].append((player, hand))
+        #     else:
+        #         ranks[player.categoryRank] = [(player, hand)]
+        # danger code ends, don't uncomment it
 
-            player.category = hand.category
-            player.categoryRank = hand.rank
-
-            if player.categoryRank in ranks:
-                ranks[player.categoryRank].append((player, hand))
-            else:
-                ranks[player.categoryRank] = [(player, hand)]
-
-        for rank in ranks:
-            if len(ranks[rank]) > 1:
-                self.calculateInternalRank(rank, ranks[rank])
+        # for rank in ranks:
+        #     if len(ranks[rank]) > 1:
+        #         self.calculateInternalRank(rank, ranks[rank])
 
 
 
-    def calculateInternalRank(self, rank, players):
-        if rank == 10:
+    # def calculateInternalRank(self, rank, players):
+    #     if rank == 10:

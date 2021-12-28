@@ -6,12 +6,13 @@ class Player:
         self.categoryRank = 0
         self.internalRank = 0
         self.category = ""
-        self.hand = ""
+        self.hand = None
 
     def showPlayer(self):
         print("{}:".format(self.playerName))
         for card in self.playerCards:
             print(card.showCard(), end = " ")
         print()
-        print("category: {}, categoryRank: {}, internalRank: {}".format(
-        self.category, self.categoryRank, self.internalRank))
+        print("category: {}, category: {}, internalRank: {}, bestCards: {}"
+        .format(self.category, self.category, self.internalRank, self.hand.bestCards))
+        print()

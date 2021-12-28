@@ -1,10 +1,11 @@
 from game import Game
 
-newGame = Game(4)
+newGame = Game(5)
 
 newGame.deal()
 
 newGame.showTable()
-newGame.showPlayerCards()
 
 newGame.calculateTheWinner()
+
+# newGame.showPlayerCards()

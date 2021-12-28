@@ -12,6 +12,7 @@ class Card:
             self.value = 11
         else:
             self.value = int(number)
+        self.hexValue = chr(96+self.value)
 
     # def getValue(self, card):
     #     return card.value
