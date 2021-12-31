@@ -3,9 +3,9 @@ from card import Card
 class Hand:
     def __init__(self, hand):
         self.hand = hand #[Card()]
-        self.rank = 0 #rank will be updated in the next step
+        self.rank = 0
+        self.bestCards = "" #rank, bestCards will be updated in the next step
         self.category = self.pickCategory()
-        self.bestCards = "" #self.pickBestCards()
 
     def isStraight(self, numbers):
         isHandStraight = False
@@ -16,8 +16,6 @@ class Hand:
         newNums = []
         for i in range(len(numbers) - 1):
             newNums.append(numbers[i] - numbers[i+1])
-
-        # print(numbers, newNums)
 
         for i in range(len(newNums)-3):
             if newNums[i:i+4].count(-1) == -4:
@@ -35,9 +33,7 @@ class Hand:
         return card.value
 
     def pickBestCards(self, frequency = {}, frequencyCount = {}):
-        # print(self.rank)
         if self.rank == 10: #High card
-            # print(len(self.hand), "blabla")
             self.hand.sort(key=self.getValue, reverse=True)
             self.hand.pop(-1)
             self.hand.pop(-1)
@@ -47,10 +43,10 @@ class Hand:
             for key, value in frequency.items():
                 if value == 4:
                     bestCards = [chr(96+key) for _ in range(4)]
-                    del frequency[key]
+                    break
+            del frequency[key]
 
-            bestCards.append(chr(96+max(frequency.keyss())))
-            # self.bestCards = "".join(bestCards)
+            bestCards.append(chr(96+max(frequency.keys())))
 
         if self.rank == 4: #Full House
             if frequencyCount[3] == 1 and frequencyCount[2] == 1:
@@ -69,7 +65,7 @@ class Hand:
                     if value == 3:
                         triplets.append(key)
                 triplets.sort(reverse = True)
-                bestCards = [chr(96+triplets[i//3].getValue) for i in range(5)]
+                bestCards = [chr(96+triplets[i//3]) for i in range(5)]
 
             if frequencyCount[3] == 1 and frequencyCount[2] > 1:
                 for key, value in frequency.items():
@@ -85,7 +81,6 @@ class Hand:
                 bestCards.append(chr(96+biggestTwin))
 
         if self.rank == 7: #Three of a kind
-            # print(frequency)
             for key, value in frequency.items():
                 if value == 3:
                     bestCards = [chr(96+key) for _ in range(3)]
@@ -98,7 +93,6 @@ class Hand:
                 bestCards.append(chr(96+key))
 
         if self.rank == 8: #Two pair
-            # print(frequency)
             twins = []
             for key, value in frequency.items():
                 if value == 2:
@@ -107,7 +101,6 @@ class Hand:
             for key in twins:
                 del frequency[key]
 
-            # print(twins)
             twins.sort(reverse = True)
             if len(twins) > 2:
                 bestCards = [chr(96+twins[i//2]) for i in range(5)]
@@ -128,14 +121,9 @@ class Hand:
             for key in keys[:3]:
                 bestCards.append(chr(96+key))
 
-        # print("yeah", bestCards)
         self.bestCards = "".join(bestCards)
 
     def pickCategory(self):
-        # print()
-        # for card in self.hand:
-        #     print(card.showCard(), end = " ")
-
         suitFrequency = {"h": 0, "s": 0, "c": 0, "d": 0}
 
         for card in self.hand:
@@ -206,42 +194,9 @@ class Hand:
             self.rank = 6
             return "Straight"
 
-                # self.findRank(cardValues, category)
         if self.rank == 10:
             self.pickBestCards()
-        # print(self.rank)
-        # print(self.bestCards)
         return category
-
-                # foundThree = False
-                # for key, value in frequency.items():
-                #     if value == 3:
-                #         frequency.pop(key)
-                #         foundThree = True
-                #         break
-                #
-                # category = "High Card"
-                # if foundThree:
-                #     for key, value in frequency.items():
-                #         if value >= 2:
-                #             return "Full House"
-                #     category = "Three of a kind"
-                #
-                # else:
-                #     foundTow = False
-                #     for key, value in frequency.items():
-                #         if value == 2:
-                #             category = "Three of a kind"
-
-
-    # def findRank(self, numbers, category):
-    #     topNums = sorted(numbers)[:5]
-    #     # print(topNums)
-    #     if category == "High Card":
-    #         self.score = sum(topNums)
-
-
-
 
 
 # def check(hand):

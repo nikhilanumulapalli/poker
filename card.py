@@ -14,8 +14,5 @@ class Card:
             self.value = int(number)
         self.hexValue = chr(96+self.value)
 
-    # def getValue(self, card):
-    #     return card.value
-
     def showCard(self):
         return self.suit+self.number
